@@ -1,0 +1,45 @@
+BEGIN TRANSACTION;
+CREATE TABLE IF NOT EXISTS "pessoa" (
+	"id"	INTEGER NOT NULL,
+	"nome"	TEXT NOT NULL,
+	"cargo"	TEXT NOT NULL,
+	"foto"	TEXT NOT NULL,
+	PRIMARY KEY("id")
+);
+CREATE TABLE IF NOT EXISTS "realizacoes" (
+	"id"	INTEGER,
+	"realizacao"	TEXT NOT NULL,
+	"data"	INTEGER NOT NULL,
+	"descricao"	TEXT NOT NULL,
+	FOREIGN KEY("id") REFERENCES "pessoa"("id")
+);
+CREATE TABLE IF NOT EXISTS "sobre" (
+	"id"	INTEGER,
+	"estado"	TEXT NOT NULL,
+	"cidade"	TEXT NOT NULL,
+	"rua"	TEXT NOT NULL,
+	"email"	TEXT NOT NULL,
+	"telefone"	INTEGER NOT NULL,
+	"texto"	VARCHAR(255) NOT NULL,
+	FOREIGN KEY("id") REFERENCES "pessoa"("id")
+);
+CREATE TABLE IF NOT EXISTS "formacao" (
+	"id"	INTEGER,
+	"curso"	TEXT NOT NULL,
+	"dataInicial"	DATE NOT NULL,
+	"dataFinal"	DATE NOT NULL,
+	FOREIGN KEY("id") REFERENCES "pessoa"("id")
+);
+CREATE TABLE IF NOT EXISTS "habilidades" (
+	"id"	INTEGER,
+	"habilidade"	TEXT NOT NULL,
+	"nivel"	INTEGER NOT NULL,
+	FOREIGN KEY("id") REFERENCES "pessoa"("id")
+);
+CREATE TABLE IF NOT EXISTS "personalidade" (
+	"id"	INTEGER,
+	"caracteristica"	TEXT NOT NULL,
+	"nivel"	INTEGER NOT NULL,
+	FOREIGN KEY("id") REFERENCES "pessoa"("id")
+);
+COMMIT;
