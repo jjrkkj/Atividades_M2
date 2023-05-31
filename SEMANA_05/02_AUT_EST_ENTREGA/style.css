@@ -154,3 +154,45 @@ aside > section > h1 {
 .p_habilidades {
     width: 140px;
 }
+
+/* Tablet */
+@media (max-width: 768px) {
+    aside > section > div > img {
+        height: 30px;
+        width: 30px;
+    }
+
+    aside > section > div > p {
+        font-size: 12px;
+    }
+
+    aside > section > p {
+        font-size: 12px;
+    }
+
+    main > section > h1 {
+        font-size: 16px;
+    }
+    
+}
+
+/* Celular */
+@media (max-width: 480px) {
+    aside > section > div > img {
+        height: 25px;
+        width: 25px;
+    }
+
+    aside > section > div > p {
+        font-size: 10px;
+    }
+
+    aside > section > p {
+        font-size: 10px;
+    }
+
+    main > section > h1 {
+        font-size: 13.5px;
+    }
+
+}
