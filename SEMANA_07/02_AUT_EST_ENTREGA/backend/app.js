@@ -1,22 +1,24 @@
 const express = require('express'); 
-const sqlite3 = require('sqlite3').verbose();
-
 const app = express();
+
+const sqlite3 = require('sqlite3');
 const DBPATH = '../data/database.db';
 
 const hostname = '127.0.0.1';
-const port = 3000;
+const port = 5500;
 
+app.use(express.static('../frontend/'))
 app.use(express.json());
 
+// Endpoints
+
 app.get('/formacao', (req, res) => {
-    res.statusCode = 200;
-    res.setHeader('Access-Control-Allow-Origin', '*'); 
     var db = new sqlite3.Database(DBPATH);
-    var sql = 'SELECT curso, ano_inicial, ano_final FROM formacao ORDER BY data_final DESC';
+    res.setHeader('Access-Control-Allow-Origin', '*'); 
+    var sql = 'SELECT curso, ano_inicial, ano_final, descricao FROM formacao ORDER BY ano_final ASC';
     db.all(sql, [],  (err, rows ) => {
         if (err) {
-            throw err;
+            console.log(err);
         }
         res.json(rows);
     });
@@ -26,7 +28,6 @@ app.get('/formacao', (req, res) => {
 app.get('/experiencia', (req, res) => {
     res.statusCode = 200;
     res.setHeader('Access-Control-Allow-Origin', '*'); 
-    var db = new sqlite3.Database(DBPATH);
     var sql = 'SELECT empresa, ano_inicial, ano_final, cargo, descricao FROM experiencia ORDER BY data_final DESC';
     db.all(sql, [],  (err, rows ) => {
         if (err) {
@@ -40,7 +41,6 @@ app.get('/experiencia', (req, res) => {
 app.get('/habilidades', (req, res) => {
     res.statusCode = 200;
     res.setHeader('Access-Control-Allow-Origin', '*'); 
-    var db = new sqlite3.Database(DBPATH);
     var sql = 'SELECT habilidade, nivel FROM habilidades ORDER BY nivel DESC';
     db.all(sql, [],  (err, rows ) => {
         if (err) {
@@ -54,7 +54,6 @@ app.get('/habilidades', (req, res) => {
 app.get('/personalidade', (req, res) => {
     res.statusCode = 200;
     res.setHeader('Access-Control-Allow-Origin', '*'); 
-    var db = new sqlite3.Database(DBPATH);
     var sql = 'SELECT caracteristica, nivel FROM personalidade ORDER BY nivel DESC';
     db.all(sql, [],  (err, rows ) => {
         if (err) {
@@ -68,7 +67,6 @@ app.get('/personalidade', (req, res) => {
 app.get('/realizacoes', (req, res) => {
     res.statusCode = 200;
     res.setHeader('Access-Control-Allow-Origin', '*'); 
-    var db = new sqlite3.Database(DBPATH);
     var sql = 'SELECT realizacao, ano, descricao FROM realizacoes ORDER BY ano ASC';
     db.all(sql, [],  (err, rows ) => {
         if (err) {
@@ -82,7 +80,6 @@ app.get('/realizacoes', (req, res) => {
 app.get('/pessoa', (req, res) => {
     res.statusCode = 200;
     res.setHeader('Access-Control-Allow-Origin', '*'); 
-    var db = new sqlite3.Database(DBPATH);
     var sql = 'SELECT id, nome, cargo, foto, estado, cidade, rua, numero, email, telefone, descricao FROM pessoa';
     db.all(sql, [],  (err, rows ) => {
         if (err) {
@@ -92,3 +89,7 @@ app.get('/pessoa', (req, res) => {
     });
     db.close();
 });
+
+app.listen(port, hostname, () => {
+    console.log(`Servidor rodando em: http://${hostname}:${port}/`)
+})
